@@ -1,0 +1,29 @@
+{
+    "notes" : [
+        {
+            "person": "YZ",
+            "date": "09/28/2020",
+            "jokesAmount": "5"
+        },
+        {
+            "person": "NZ",
+            "date": "09/28/2020",
+            "jokesAmount": "5"
+        },
+        {
+            "person": "RK",
+            "date": "09/28/2020",
+            "jokesAmount": "1"
+        },
+        {
+            "person": "YZ",
+            "date": "09/29/2020",
+            "jokesAmount": "5"
+        },
+        {
+            "person": "NZ",
+            "date": "09/29/2020",
+            "jokesAmount": "3"
+        }
+    ]
+}
