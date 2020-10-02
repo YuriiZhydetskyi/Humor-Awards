@@ -37,14 +37,14 @@ function printPersons() {
         let daysAmount = personCard.getElementsByClassName("days-amount")[0];
         daysAmount.getElementsByClassName("result")[0].innerHTML = person.daysAmount();
 
-        let daysAmount = personCard.getElementsByClassName("jokes-amount")[0];
-        daysAmount.getElementsByClassName("result")[0].innerHTML = person.jokesAmount();
+        let jokesAmount = personCard.getElementsByClassName("jokes-amount")[0];
+        jokesAmount.getElementsByClassName("result")[0].innerHTML = person.jokesAmount();
 
-        let daysAmount = personCard.getElementsByClassName("longest-stick")[0];
-        daysAmount.getElementsByClassName("result")[0].innerHTML = person.longestStick();
+        let longestStick = personCard.getElementsByClassName("longest-stick")[0];
+        longestStick.getElementsByClassName("result")[0].innerHTML = person.longestStick();
 
-        let daysAmount = personCard.getElementsByClassName("current-stick")[0];
-        daysAmount.getElementsByClassName("result")[0].innerHTML = person.curentStick();
+        let curentStick = personCard.getElementsByClassName("current-stick")[0];
+        curentStick.getElementsByClassName("result")[0].innerHTML = person.curentStick();
     });
 }
 
