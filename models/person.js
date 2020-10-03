@@ -1,104 +1,111 @@
 class Person {
     constructor(name, id, notesList) {
-        this.person = person;
+        this.name = name;
         this.id = id;
-        this.notesList = getPersonNotes(notesList);
+        this.notesList = this.getPersonNotes(notesList);
     }
 
 
-daysAmount() {
-    let amount = 0;
-    this.notesList.forEach(note => {
-        if (note.jokesAmount >= 5) {
-            ++amount;
-        }
-    });
-
-    return amount;
-}
-
-jokesAmount() {
-    let amount = 0;
-    this.notesList.forEach(note => {
-        amount += note.jokesAmount;
-    });
-
-    return amount;
-}
-
-longestStick() {
-    let max = 0;
-    let amount = 0;
-    let notes = onlyTrueDays(this.notesList);
-
-    let date1;
-    let date2;
-
-    for (i = 0; i < notes.length - 1; ++i) {
-        date1 = new Date(notes[i].date);
-        date2 = new Date(notes[i + 1].date);
-        const diffTime = Math.abs(date2 - date1);
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        if (diffDays <= 1) {
-            ++amount;
-        } else {
-            if (amount > max) {
-                max = amount;
+    daysAmount() {
+        let amount = 0;
+        this.notesList.forEach(note => {
+            if (note.jokesAmount >= 5) {
+                ++amount;
             }
-            amount = 0;
+        });
+
+        return amount;
+    }
+
+    jokesAmount() {
+        let amount = 0;
+        this.notesList.forEach(note => {
+            amount += parseInt(note.jokesAmount);
+        });
+
+        return amount;
+    }
+
+    longestStick() {
+        let notes = this.onlyTrueDays(this.notesList);
+        let max = 0;
+        let amount = notes.length > 0 ? 1 : 0;        
+
+        let date1;
+        let date2;
+
+        for (let i = 0; i < notes.length - 1; ++i) {
+            date1 = new Date(notes[i].date);
+            date2 = new Date(notes[i + 1].date);
+            if (this.differenceInDays(date1, date2) <= 1) {
+                ++amount;
+            } else {
+                if (amount > max) {
+                    max = amount;
+                }
+                amount = 0;
+            }
         }
+
+        if (amount > max) {
+            max = amount;
+        }
+
+        return max;
     }
 
-    if (amount > max) {
-        max = amount;
+    curentStick() {
+        let amount = 1;
+        let notes = this.onlyTrueDays(this.notesList);
+
+        let date1;
+        let date2;
+
+        date1 = new Date(notes[notes.length - 1]?.date);
+        if (this.differenceInDays(date1, Date.now()) > 1) {
+            return 0;
+        }
+
+        for (let i = notes.length - 1; i > 1; --i) {
+            date1 = new Date(notes[i].date);
+            date2 = new Date(notes[i - 1].date);
+
+            if (this.differenceInDays(date1, date2) <= 1) {
+                ++amount;
+            } else {
+                return amount;
+            }
+        }
+
+        return amount;
     }
 
-    return max;
-}
+    onlyTrueDays(notesList) {
+        let trueDays = [];
+        notesList.forEach(note => {
+            if (note.jokesAmount >= 5) {
+                trueDays.push(note);
+            }
+        });
 
-curentStick() {
-    let amount = 0;
-    let notes = onlyTrueDays(this.notesList);
+        return trueDays;
+    }
 
-    let date1;
-    let date2;
+    getPersonNotes(notesList) {
 
-    for (i = notes.length - 1; i > 1; --i) {
-        date1 = new Date(notes[i].date);
-        date2 = new Date(notes[i - 1].date);
+        let personNotes = [];
+        notesList.forEach(note => {
+            if (note.person === this.id) {
+                personNotes.push(note);
+            }
+        });
+        return personNotes;
+    }
+
+    differenceInDays(date1, date2) {
+
         const diffTime = Math.abs(date2 - date1);
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        if (diffDays <= 1) {
-            ++amount;
-        } else {
-            return amount;
-        }
+        return Math.floor(diffTime / (1000 * 60 * 60 * 24));
     }
-
-    return amount;
-}
-
-onlyTrueDays(notesList) {
-    let trueDays = [];
-    notesList.forEach(note => {
-        if (note.jokesAmount >= 5) {
-            trueDays.push(note);
-        }
-    });
-
-    return trueDays;
-}
-
-getPersonNotes(notesList){
-  
-    let personNotes = [];
-    notesList.forEach(note => {
-        if(note.person === this.id){
-            personNotes.push(note);
-        }
-    });
-    return personNotes;
-  }
-
 
 }

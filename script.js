@@ -1,12 +1,19 @@
+let notes = [];
+let persons = [];
+
+//just for local using
+let dataJSON = '{    "notes" : [        {            "person": "YZ",            "date": "09/28/2020",            "jokesAmount": "5"        },        {            "person": "NZ",            "date": "09/28/2020",            "jokesAmount": "5"        },        {            "person": "RK",            "date": "09/28/2020",            "jokesAmount": "1"        },        {            "person": "YZ",            "date": "09/29/2020",            "jokesAmount": "5"        },        {            "person": "NZ",            "date": "09/29/2020",            "jokesAmount": "3"        }    ]}';
+
 main();
 
-function main() {
-    let notes;
-    let persons;
+function main() {    
+
     loadJSON(function (response) {
         notes = JSON.parse(response).notes;
     });
-    notes.sort(note.compare);
+    //loadJSONOnlyForLocalUsing();
+
+    notes.sort(Note.compare);
     initPersons();
     printPersons();
 }
@@ -15,6 +22,10 @@ function initPersons() {
     persons.push(new Person("Юрій-Стефан Жидецький", "YZ", notes));
     persons.push(new Person("Назар Заплатинський", "NZ", notes));
     persons.push(new Person("Роман Колтун", "RK", notes));
+}
+
+function loadJSONOnlyForLocalUsing(){
+    notes = JSON.parse(dataJSON).notes;
 }
 
 function loadJSON(callback) {
@@ -47,4 +58,3 @@ function printPersons() {
         curentStick.getElementsByClassName("result")[0].innerHTML = person.curentStick();
     });
 }
-
