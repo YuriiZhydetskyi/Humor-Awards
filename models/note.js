@@ -1,8 +1,8 @@
 class Note {
-    constructor(person, date, jokesAmount) {
-        this.person = person;
-        this.date = date;
-        this.jokesAmount = parseInt(jokesAmount); //why it's not a Number but a string?
+    constructor(noteObj) {
+        this.person = noteObj.person;
+        this.date = noteObj.date;
+        this.jokesAmount = parseInt(noteObj.jokesAmount); //why it's not a Number but a string?
     }
 
     static compare(a, b) {

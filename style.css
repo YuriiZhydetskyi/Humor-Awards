@@ -1,16 +1,43 @@
 body {
 }
 
+.header{
+  background-color: rgba(127, 255, 212, 0.336);
+  text-align: center;
+}
+
 .card {
   /* Add shadows to create the "card" effect */
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
-  width: 250px;
+  width: 250px;  
+}
+
+.award-container{
+  position: relative;
 }
 
 /* On mouse-over, add a deeper shadow */
 .card:hover {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.pictre-and-awards{
+  display: grid;
+  grid-template-columns: repeat(5, 50px);
+  grid-template-rows: repeat(4, 50px); 
+  grid-auto-flow: row;
+}
+
+.award-img{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  opacity: 0.2;
+}
+
+.completed-award{
+  opacity: 1;
 }
 
 /* Add some padding inside the card container */
@@ -21,6 +48,8 @@ body {
 .card-img {
   width: 200px;
   height: 200px;
+  grid-column: 1 / 5;
+  grid-row: 1 / 5;
 }
 
 .result{
@@ -65,7 +94,8 @@ body {
   width: 200px;
 }
 
-.prarticipant-month-calendar-day-box .day-box-info {
+.prarticipant-month-calendar-day-box .day-box-info,
+.award-container .award-tooltip {
   visibility: hidden;
   width: 120px;
   background-color: #555;
@@ -82,7 +112,17 @@ body {
   transition: opacity 0.3s;
 }
 
-.prarticipant-month-calendar-day-box .day-box-info::after {
+.award-container .award-tooltip {
+  width: 220px;
+  bottom: 100%;
+  left: -50%;
+  padding-top: 10px;
+  padding-bottom: 0px;
+  line-height: 0.7;
+}
+
+.prarticipant-month-calendar-day-box .day-box-info::after,
+.award-container .award-tooltip::after {
   content: "";
   position: absolute;
   top: 100%;
@@ -93,7 +133,8 @@ body {
   border-color: #555 transparent transparent transparent;
 }
 
-.prarticipant-month-calendar-day-box:hover .day-box-info {
+.prarticipant-month-calendar-day-box:hover .day-box-info,
+.award-container:hover .award-tooltip {
   visibility: visible;
   opacity: 1;
 }

@@ -1,28 +1,41 @@
 let notes = [];
 let persons = [];
-
+let awards = [];
 //just for local using
-let dataJSON = '{    "notes" : [        {            "person": "YZ",            "date": "09/28/2020",            "jokesAmount": "5"        },        {            "person": "NZ",            "date": "09/28/2020",            "jokesAmount": "5"        },        {            "person": "RK",            "date": "09/28/2020",            "jokesAmount": "1"        },        {            "person": "YZ",            "date": "09/29/2020",            "jokesAmount": "5"        },        {            "person": "NZ",            "date": "09/29/2020",            "jokesAmount": "3"        }    ]}';
+let dataJSON = '{    "notes" : [        {            "person": "YZ",            "date": "09/28/2020",            "jokesAmount": "5"        },        {            "person": "NZ",            "date": "09/28/2020",            "jokesAmount": "5"        },        {            "person": "RK",            "date": "09/28/2020",            "jokesAmount": "1"        },        {            "person": "YZ",            "date": "09/29/2020",            "jokesAmount": "5"        },        {            "person": "NZ",            "date": "09/29/2020",            "jokesAmount": "3"        }    ],    "awards" : [        {            "nameUk": "Я хоча б спробував",            "imgPath": "img/awards/RP Mcmurphy.jpg",            "imgAlt": "Макмерфі",            "neededLength": "1"        },        {            "nameUk": "Початківець",            "imgPath": "img/awards/fool cap.jpg",            "imgAlt": "Кепка дурня",            "neededLength": "2"        },        {            "nameUk": "Цілеспрямований",            "imgPath": "img/awards/Bushuev.jpeg",            "imgAlt": "Бушуєв",            "neededLength": "5"        }    ]    }';
+//
+
+let loadData = new Promise((resolve, reject) => {
+
+    let localURL = "file://";
+    if (window.location.href.substr(0, localURL.length).toUpperCase() == localURL.toUpperCase()) {
+        loadJSONOnlyForLocalUsing();
+        setTimeout(resolve(), 0);
+    } else {
+
+        loadJSON(function (response) {
+            let parsedJson = JSON.parse(response);
+            notes = parsedJson.notes;
+            awards = parsedJson.awards;
+
+            resolve();
+        });
+    }
+})
 
 main();
 
 function main() {
 
-    let localURL = "file://";
-    
-    if (window.location.href.substr(0, localURL.length).toUpperCase() == localURL.toUpperCase()) {
-        loadJSONOnlyForLocalUsing();
-    } else {
+    loadData.then(() => {
 
-        loadJSON(function (response) {
-            notes = JSON.parse(response).notes;
-        });
-    }
+        notes.sort(Note.compare);
+        initPersons();
+        printPersons();
+        printCalendar();
+    })
 
-    notes.sort(Note.compare);
-    initPersons();
-    printPersons();
-    printCalendar();
+
 }
 
 function initPersons() {
@@ -32,7 +45,14 @@ function initPersons() {
 }
 
 function loadJSONOnlyForLocalUsing() {
-    notes = JSON.parse(dataJSON).notes;
+    let parsedJson = JSON.parse(dataJSON);
+    parsedJson.notes.forEach(note => {
+        notes.push(new Note(note));
+    });
+
+    parsedJson.awards.forEach(award => {
+        awards.push(new Award(award));
+    })
 }
 
 function loadJSON(callback) {
@@ -52,6 +72,7 @@ function loadJSON(callback) {
 function printPersons() {
     persons.forEach(person => {
         let personCard = document.getElementById(person.id);
+
         let daysAmount = personCard.getElementsByClassName("days-amount")[0];
         daysAmount.getElementsByClassName("result")[0].innerHTML = person.daysAmount();
 
@@ -59,12 +80,16 @@ function printPersons() {
         jokesAmount.getElementsByClassName("result")[0].innerHTML = person.jokesAmount();
 
         let longestStick = personCard.getElementsByClassName("longest-stick")[0];
-        longestStick.getElementsByClassName("result")[0].innerHTML = person.longestStick();
+        longestStick.getElementsByClassName("result")[0].innerHTML = person.longestStick;
 
         let curentStick = personCard.getElementsByClassName("current-stick")[0];
         curentStick.getElementsByClassName("result")[0].innerHTML = person.curentStick();
+        //finished filling data
+
+        person.printAwards(personCard.getElementsByClassName("pictre-and-awards")[0], awards);
     });
 }
+
 
 function printCalendar() {
 

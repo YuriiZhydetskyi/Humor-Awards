@@ -1,8 +1,13 @@
 class Person {
+    longestStick = 0;
+    allSticks = [];
+
     constructor(name, id, notesList) {
         this.name = name;
         this.id = id;
         this.notesList = this.getPersonNotes(notesList);
+        this.pureDays = this.getPureDays(this.notesList);
+        this.setAllAndLongestSticks();
     }
 
 
@@ -20,55 +25,26 @@ class Person {
     jokesAmount() {
         let amount = 0;
         this.notesList.forEach(note => {
-            amount += parseInt(note.jokesAmount);
+            amount += note.jokesAmount;
         });
 
         return amount;
     }
 
-    longestStick() {
-        let notes = this.onlyTrueDays(this.notesList);
-        let max = 0;
-        let amount = notes.length > 0 ? 1 : 0;        
-
-        let date1;
-        let date2;
-
-        for (let i = 0; i < notes.length - 1; ++i) {
-            date1 = new Date(notes[i].date);
-            date2 = new Date(notes[i + 1].date);
-            if (this.differenceInDays(date1, date2) <= 1) {
-                ++amount;
-            } else {
-                if (amount > max) {
-                    max = amount;
-                }
-                amount = 0;
-            }
-        }
-
-        if (amount > max) {
-            max = amount;
-        }
-
-        return max;
-    }
-
     curentStick() {
         let amount = 1;
-        let notes = this.onlyTrueDays(this.notesList);
 
         let date1;
         let date2;
 
-        date1 = new Date(notes[notes.length - 1]?.date);
+        date1 = new Date(this.pureDays[this.pureDays.length - 1]?.date);
         if (this.differenceInDays(date1, Date.now()) > 1) {
             return 0;
         }
 
-        for (let i = notes.length - 1; i > 1; --i) {
-            date1 = new Date(notes[i].date);
-            date2 = new Date(notes[i - 1].date);
+        for (let i = this.pureDays.length - 1; i > 1; --i) {
+            date1 = new Date(this.pureDays[i].date);
+            date2 = new Date(this.pureDays[i - 1].date);
 
             if (this.differenceInDays(date1, date2) <= 1) {
                 ++amount;
@@ -80,7 +56,7 @@ class Person {
         return amount;
     }
 
-    onlyTrueDays(notesList) {
+    getPureDays(notesList) {
         let trueDays = [];
         notesList.forEach(note => {
             if (note.jokesAmount >= 5) {
@@ -118,6 +94,56 @@ class Person {
         }
 
         return 0;
+    }
+
+    setAllAndLongestSticks(){
+
+        if(this.pureDays.length === 0){
+            this.longestStick = 0;
+            this.allSticks = [];
+            return;
+        }
+
+        let amount = 1;        
+        let stick = [];
+
+        let date1;
+        let date2;
+
+        stick.push(this.pureDays[0]);
+
+        for (let i = 0; i < this.pureDays.length - 1; ++i) {
+            date1 = new Date(this.pureDays[i].date);
+            date2 = new Date(this.pureDays[i + 1].date);
+            if (this.differenceInDays(date1, date2) <= 1) {
+                ++amount;
+                stick.push()
+            } else {
+                if (amount > this.longestStick) {
+                    this.longestStick = amount;
+                }
+                amount = 0;
+                this.allSticks.push(stick);
+                stick = [];
+            }
+        }
+
+        if (amount > this.longestStick) {
+            this.longestStick = amount;
+            this.allSticks.push(stick);
+        }
+
+        this.allSticks.sort((a, b) => (a.length - b.length));
+    }
+
+    printAwards(element, awards){
+
+        awards.forEach(award => {
+
+            let awardEement = award.getElement(this.longestStick >= award.neededLength);
+
+            element.appendChild(awardEement);
+        });
     }
 
 }
