@@ -6,16 +6,17 @@ let dataJSON = '{    "notes" : [        {            "person": "YZ",            
 
 main();
 
-function main() {    
+function main() {
 
-    loadJSON(function (response) {
-        notes = JSON.parse(response).notes;
-    });
-    //loadJSONOnlyForLocalUsing();
+    // loadJSON(function (response) {
+    //     notes = JSON.parse(response).notes;
+    // });
+    loadJSONOnlyForLocalUsing();
 
     notes.sort(Note.compare);
     initPersons();
     printPersons();
+    printCalendar();
 }
 
 function initPersons() {
@@ -24,7 +25,7 @@ function initPersons() {
     persons.push(new Person("Роман Колтун", "RK", notes));
 }
 
-function loadJSONOnlyForLocalUsing(){
+function loadJSONOnlyForLocalUsing() {
     notes = JSON.parse(dataJSON).notes;
 }
 
@@ -57,4 +58,51 @@ function printPersons() {
         let curentStick = personCard.getElementsByClassName("current-stick")[0];
         curentStick.getElementsByClassName("result")[0].innerHTML = person.curentStick();
     });
+}
+
+function printCalendar() {
+
+    let calendar = document.getElementById("calendar");    
+
+    persons.forEach(person => {
+
+        let personElement = document.createElement('div');
+        personElement.classList.add("prarticipant-month-calendar");
+        personElement.id = person.id + "-calendar";
+
+        let personNameElement = document.createElement("b");
+        personNameElement.appendChild(document.createTextNode(person.name));
+        personNameElement.classList.add("month-calendar-participant-name");
+        personElement.appendChild(personNameElement);
+
+        calendar.appendChild(personElement);
+
+        for (let i = 0; i <= 30; ++i) {
+
+            let dayBoxElement = document.createElement("div");
+            dayBoxElement.classList.add("prarticipant-month-calendar-day-box");
+
+            let now = new Date();
+            let day = new Date(now.setDate(now.getDate() - i));
+            let jokesAmount = person.jokesAmountInSpecificDay(day);
+
+            let dayBoxInfo = document.createElement("div");
+            dayBoxInfo.classList.add("day-box-info");
+            dayBoxInfo.appendChild(document.createElement("p").appendChild(document.createTextNode(day.toJSON().slice(0,10))));
+            dayBoxInfo.appendChild(document.createTextNode("\n Жартів: " + jokesAmount));
+            dayBoxElement.appendChild(dayBoxInfo);
+
+            if (jokesAmount >= 5) {
+                dayBoxElement.classList.add("compleated-day-aim");
+            } else if (jokesAmount > 0) {
+                dayBoxElement.classList.add("partially-compleated-day-aim");
+            } else {
+                dayBoxElement.classList.add("failed-day-aim");
+            }
+
+            personElement.appendChild(dayBoxElement);
+        }
+
+    });
+
 }

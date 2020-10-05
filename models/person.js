@@ -108,4 +108,16 @@ class Person {
         return Math.floor(diffTime / (1000 * 60 * 60 * 24));
     }
 
+    jokesAmountInSpecificDay(date){
+
+        for(let note of this.notesList) {
+            if(areTwoDateEqual(new Date(note.date), date)){
+
+                return note.jokesAmount;
+            }
+        }
+
+        return 0;
+    }
+
 }
