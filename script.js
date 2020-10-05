@@ -15,8 +15,14 @@ let loadData = new Promise((resolve, reject) => {
 
         loadJSON(function (response) {
             let parsedJson = JSON.parse(response);
-            notes = parsedJson.notes;
-            awards = parsedJson.awards;
+            
+            parsedJson.notes.forEach(note => {
+                notes.push(new Note(note));
+            });
+        
+            parsedJson.awards.forEach(award => {
+                awards.push(new Award(award));
+            })
 
             resolve();
         });

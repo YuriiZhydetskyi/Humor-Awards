@@ -121,6 +121,10 @@ body {
   line-height: 0.7;
 }
 
+.award-container:hover .award-img{
+  opacity: 1;
+}
+
 .prarticipant-month-calendar-day-box .day-box-info::after,
 .award-container .award-tooltip::after {
   content: "";
