@@ -8,10 +8,16 @@ main();
 
 function main() {
 
-    // loadJSON(function (response) {
-    //     notes = JSON.parse(response).notes;
-    // });
-    loadJSONOnlyForLocalUsing();
+    let localURL = "file://";
+    
+    if (window.location.href.substr(0, localURL.length).toUpperCase() == localURL.toUpperCase()) {
+        loadJSONOnlyForLocalUsing();
+    } else {
+
+        loadJSON(function (response) {
+            notes = JSON.parse(response).notes;
+        });
+    }
 
     notes.sort(Note.compare);
     initPersons();
@@ -62,7 +68,7 @@ function printPersons() {
 
 function printCalendar() {
 
-    let calendar = document.getElementById("calendar");    
+    let calendar = document.getElementById("calendar");
 
     persons.forEach(person => {
 
@@ -88,7 +94,7 @@ function printCalendar() {
 
             let dayBoxInfo = document.createElement("div");
             dayBoxInfo.classList.add("day-box-info");
-            dayBoxInfo.appendChild(document.createElement("p").appendChild(document.createTextNode(day.toJSON().slice(0,10))));
+            dayBoxInfo.appendChild(document.createElement("p").appendChild(document.createTextNode(day.toJSON().slice(0, 10))));
             dayBoxInfo.appendChild(document.createTextNode("\n Жартів: " + jokesAmount));
             dayBoxElement.appendChild(dayBoxInfo);
 

@@ -23,6 +23,10 @@ body {
   height: 200px;
 }
 
+.result{
+  padding-left: 10px;
+}
+
 .participants {
     display: grid;
     grid-gap: 5px;
