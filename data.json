@@ -45,6 +45,42 @@
             "imgPath": "img/awards/Bushuev.jpeg",
             "imgAlt": "Бушуєв",
             "neededLength": "5"
+        },
+        {
+            "nameUk": "Озарків",
+            "imgPath": "img/awards/Ozarkiv.png",
+            "imgAlt": "Озарків",
+            "neededLength": "7"
+        },
+        {
+            "nameUk": "2 тижні (forthnight)",
+            "imgPath": "img/awards/fortnight.jpeg",
+            "imgAlt": "Фортнайт",
+            "neededLength": "14"
+        },
+        {
+            "nameUk": "Агафон",
+            "imgPath": "img/awards/agafon.jpg",
+            "imgAlt": "Агафон",
+            "neededLength": "20"
+        },
+        {
+            "nameUk": "Ворон",
+            "imgPath": "img/awards/voron.jpg",
+            "imgAlt": "Ворон",
+            "neededLength": "30"
+        },
+        {
+            "nameUk": "Президент",
+            "imgPath": "img/awards/zelenskyi.png",
+            "imgAlt": "Зеленський",
+            "neededLength": "60"
+        },        
+        {
+            "nameUk": "Президент планети КВН",
+            "imgPath": "img/awards/maslyakow.jpg",
+            "imgAlt": "Масляков",
+            "neededLength": "100"
         }
     ]    
 }

@@ -38,7 +38,7 @@ class Person {
         let date2;
 
         date1 = new Date(this.pureDays[this.pureDays.length - 1]?.date);
-        if (this.differenceInDays(date1, Date.now()) > 1) {
+        if (this.pureDays.length === 0 || this.differenceInDays(date1, Date.now()) > 1) {
             return 0;
         }
 

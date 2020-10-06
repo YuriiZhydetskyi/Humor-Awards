@@ -1,5 +1,4 @@
-body {
-}
+p { margin: 5px }
 
 .header{
   background-color: rgba(127, 255, 212, 0.336);
@@ -118,7 +117,7 @@ body {
   left: -50%;
   padding-top: 10px;
   padding-bottom: 0px;
-  line-height: 0.7;
+  line-height: 1.4;
 }
 
 .award-container:hover .award-img{
